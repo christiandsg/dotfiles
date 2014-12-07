@@ -25,19 +25,20 @@ filetype plugin on    " Enable filetype-specific plugins
 " === Automatic actions
 " Removing unnecessary whitespaces
 autocmd BufWritePre *.py,*.js,*.rb :call <SID>StripTrailingWhitespaces()
+" Removing multiple empty lines
+autocmd BufWritePre *.py,*.js,*.rb :g/^\_$\n\_^$/d
 
 " === Functions
 " Tyding up whitespaces
 " source: http://vimcasts.org/episodes/tidying-whitespace/
 function! <SID>StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " Do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  %s/\s\+$//e
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
 endfunction
-
