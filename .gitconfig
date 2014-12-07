@@ -1,17 +1,17 @@
 [user]
-	name = christiandsg
-	email = christian.desousa@gmail.com
+  name = christiandsg
+  email = christian.desousa@gmail.com
 [github]
   user = christiandsg
 [hub]
   protocol = https
 [credential]
-	helper = cache --timeout=3600
+  helper = cache --timeout=3600
 [core]
-	editor = vim
+  editor = vim
   excludesfile = ~/.global_gitignore
 [push]
-	default = simple
+  default = simple
 [color]
   diff = auto
   status = auto
@@ -20,14 +20,15 @@
   ui = true
   pager = true
 [alias]
-  aa      = add --all :/
-  b       = browse
-  co      = checkout
-  d       = diff
-  ds      = diff --staged
-  dw      = diff --color-words
-  po      = push origin head
-  sm      = submodule
-  smu     = submodule foreach git pull origin master
-  l = log --pretty='format:%C(yellow)%h %C(blue)%ad %C(reset)%s%C(red)%d %C(green)%an%C(reset), %C(cyan)%ar' --date=short
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  aa   = add --all :/
+  b    = browse
+  co   = checkout
+  d    = diff
+  ds   = diff --staged
+  dw   = diff --color-words
+  po   = push origin head
+  s    = status
+  sm   = submodule
+  smu  = submodule foreach git pull origin master
+  l    = log --pretty='format:%C(yellow)%h %C(blue)%ad %C(reset)%s%C(red)%d %C(green)%an%C(reset), %C(cyan)%ar' --date=short
+  lg   = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
