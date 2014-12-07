@@ -1,5 +1,6 @@
 #!/bin/sh
 # Simple script to install vim plugins and its required configs
+# More plugins here: http://vimawesome.com/
 
 VIM_FOLDER=~/.vim
 VIMRC=~/.vimrc
@@ -42,7 +43,7 @@ colorscheme solarized
 install_vim_airline(){
   echo "=======> Installing vim-airline : https://github.com/bling/vim-airline"
   cd ~/.vim/bundle
-  git clone https://github.com/bling/vim-airline.git
+  git clone git://github.com/bling/vim-airline.git
   echo "\" === Plugin : Airline (status bar)
 let g:airline_theme=\"powerlineish\"
 " >> $VIMRC
@@ -51,7 +52,7 @@ let g:airline_theme=\"powerlineish\"
 install_nerdtree(){
   echo "=======> Installing NerdTree : https://github.com/scrooloose/nerdtree"
   cd ~/.vim/bundle
-  git clone https://github.com/scrooloose/nerdtree.git
+  git clone git://github.com/scrooloose/nerdtree.git
   echo "\" === Plugin : Nerdtree
 nmap <F7> :NERDTreeToggle<CR>
 nmap <F6> :NERDTreeMirror<CR>
@@ -67,10 +68,35 @@ install_vim_fugitive(){
 install_tagbar(){
   echo "=======> Installing tagbar : https://github.com/majutsushi/tagbar"
   cd ~/.vim/airline
-  git clone https://github.com/majutsushi/tagbar.git
+  git clone git://github.com/majutsushi/tagbar.git
   echo "\" === Plugin : Tagbar
 nmap <F8> :TagbarToggle<CR>
 " >> $VIMRC
+}
+
+install_repeat_vim(){
+  echo "=======> Installing repeat-vim : http://vimawesome.com/plugin/repeat-vim"
+  cd ~/.vim/bundle
+  git clone git://github.com/tpope/vim-repeat.git
+}
+
+# Text editing replated plugins
+install_vim_surround(){
+  echo "=======> Installing vim-surround : https://github.com/tpope/vim-surround.git"
+  cd ~/.vim/bundle
+  git clone git://github.com/tpope/vim-surround.git
+}
+
+install_tabular(){
+  echo "=======> Installing tabular : https://github.com/godlygeek/tabular"
+  cd ~/.vim/bundle
+  git clone git://github.com/godlygeek/tabular.git
+}
+
+install_vim_unimpaired(){
+  echo "=======> Installing vim-unimpaired : https://github.com/tpope/vim-unimpaired"
+  cd ~/.vim/bundle
+  git clone git://github.com/tpope/vim-unimpaired.git
 }
 
 # Ruby/Rails related plugins
@@ -79,6 +105,7 @@ install_vim_blunder(){
   cd ~/.vim/bundle
   git clone git://github.com/tpope/vim-bundler.git
 }
+
 install_vim_rails(){
   echo "=======> Installing vim-rails : https://github.com/tpope/vim-rails"
   cd ~/.vim/bundle
@@ -88,10 +115,18 @@ install_vim_rails(){
 # Check params are present
 clear_vimrc
 get_base_vimrc
+
 install_pathogen
+
 install_solarized
 install_vim_airline
 install_nerdtree
 install_vim_fugitive
+install_repeat_vim
+
+install_vim_surround
+install_tabular
+install_vim_unimpairedi
+
 install_vim_blunder
 install_vim_rails
