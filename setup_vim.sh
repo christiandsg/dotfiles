@@ -2,6 +2,8 @@
 # Simple script to install vim plugins and its required configs
 # More plugins here: http://vimawesome.com/
 
+set -e
+
 VIM_FOLDER=~/.vim
 VIMRC=~/.vimrc
 
@@ -21,7 +23,7 @@ clear_vim_configs(){
 }
 
 get_base_vimrc(){
-  echo "=======> Adding editor config to .vimrc"
+  echo "=======> Pulling base .vimrc"
   curl -LSso ~/.vimrc https://raw.githubusercontent.com/christiandsg/dotfiles/master/.vimrc.base
 }
 

@@ -19,8 +19,7 @@ clear_zsh_configs(){
 
 get_base_zshrc(){
   echo "=======> Pulling base .zshrc"
-  #curl -LSso $ZSHRC https://raw.githubusercontent.com/christiandsg/dotfiles/master/.zshrc.base
-  cp $PWD/.zshrc $HOME_ZSHRC
+  curl -LSso $ZSHRC https://raw.githubusercontent.com/christiandsg/dotfiles/master/.zshrc.base
 }
 
 # Commands
