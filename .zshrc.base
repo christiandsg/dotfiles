@@ -26,3 +26,4 @@ export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
+source ~/.zshrc.functions

@@ -3,25 +3,27 @@
 
 set -e
 
-echo "#### ZSH Config ####"
+echo "#### ZSH Config Setup ####"
 
-HOME_ZSH=~/.oh-my-zsh
-HOME_ZSHRC=~/.zshrc
+# Files to symlink
+zshrc_config_files='.oh-my-zsh .zshrc.base .zshrc.functions'
 
-clear_zsh_configs(){
-  echo "=======> Creating simbolic link to .oh-my-zsh"
-  rm -rf $HOME_ZSH
-  ln -s $PWD/.oh-my-zsh $HOME_ZSH
-  echo "=======> Clearing .zshrc"
-  rm $HOME_ZSHRC
-  touch $HOME_ZSHRC
+recreate_symbolic_links(){
+  echo "=======> Creating "
+  for i in $zshrc_config_files; do
+    echo "Recreating symbolic link '$i'"
+    rm -rf ~/$i
+    ln -s $PWD/$i ~/$i
+  done
 }
 
-get_base_zshrc(){
-  echo "=======> Pulling base .zshrc"
-  curl -LSso $ZSHRC https://raw.githubusercontent.com/christiandsg/dotfiles/master/.zshrc.base
+recreate_zshrc(){
+  # Create ~/.zshrc as a copy since we might want to modify it.
+  # TODO: Find a way to extend it (maybe a folder containing all zsh source files?)
+  rm -f ~/.zshrc
+  cp ~/.zshrc.base ~/.zshrc
 }
 
 # Commands
-clear_zsh_configs
-get_base_zshrc
+recreate_symbolic_links
+recreate_zshrc
