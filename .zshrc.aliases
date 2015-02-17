@@ -1,0 +1,4 @@
+
+# MAC Specific aliases
+alias mac-disable-screen='sudo nvram boot-args="niog=1"'
+alias mac-disable-screen-reset='sudo nvram -d boot-args'
