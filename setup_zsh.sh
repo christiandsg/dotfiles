@@ -8,7 +8,7 @@ echo "#### ZSH Config Setup ####"
 ZHRC=~/.zshrc
 
 # Files to symlink
-zshrc_config_files='.oh-my-zsh .zshrc.base'
+zshrc_config_files='.oh-my-zsh'
 zshrc_extras_files='.zshrc.functions .zshrc.aliases'
 
 recreate_symbolic_links(){
@@ -23,8 +23,8 @@ recreate_symbolic_links(){
 recreate_zshrc(){
   # Create ~/.zshrc as a copy since we might want to modify it.
   # TODO: Find a way to extend it (maybe a folder containing all zsh source files?)
-  rm -f ~/.zshrc
-  cp ~/.zshrc.base ~/.zshrc
+  mv -f $ZHRC ~/.zshrc.bak
+  cp $PWD/.zshrc.base $ZHRC
 }
 
 add_extras_to_zshrc(){
