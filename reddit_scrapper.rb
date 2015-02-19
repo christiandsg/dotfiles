@@ -1,44 +1,20 @@
 #!/usr/bin/env ruby
 
-##### Getting Images
-
-#reddit_address = "http://www.reddit.com/r/aww.json"
-#destination_folder = "/tmp/aww_picture"
-
-#response = RestClient.get(reddit_address)
-#response.code 404
-#puts "ERROR Response nil" if response.nil?
-
-#hashed_response = JSON.parse(response)
-
-#images = {}
-#hashed_response["data"]["children"].each do |entry|
-#  id  = entry["data"]["id"]
-#  url = entry["data"]["url"]
-#  images[id] = url
-#end
-
-#puts "#{hashed_response.inspect}"
-#images.each { |id, url|
-#  File.write("/tmp/aww_picture/#{id}.jpeg", open(url).read, {mode: 'wb'})
-#}
-
-#### Downloading Images
-
 module Reddit
 
   class Page
     require "rest_client"
     require 'json'
 
-    def initialize(subreddit)
+    def initialize(subreddit, limit = 50)
       @subreddit = subreddit
+      @limit = limit
       @data = nil
       @response = nil
     end
 
     def data
-      @response ||= RestClient.get(Reddit::Page.data_address(@subreddit))
+      @response ||= RestClient.get(Reddit::Page.data_address(@subreddit, @limit))
       @data ||= JSON.parse(@response)
     end
 
@@ -54,9 +30,9 @@ module Reddit
       @images
     end
 
-    def self.data_address(subreddit)
+    def self.data_address(subreddit, limit)
        raise ArgumentError if subreddit.nil?
-      "http://www.reddit.com/r/#{subreddit}.json"
+      "http://www.reddit.com/r/#{subreddit}.json?limit=#{limit}"
     end
   end
 
@@ -92,6 +68,8 @@ module Reddit
     private
 
     def self.normalize_url(url)
+      return url if /(jpg|jpeg)$/.match(url) # url already points to an image
+
       return nil if url.include?("imgur.com/a/") # reject imgur galeries
 
       url.sub!("https://", "http://")
@@ -104,8 +82,8 @@ module Reddit
   end
 end
 
-["aww", "corgi"].each do |subreddit_name|
-  subreddit = Reddit::Page.new(subreddit_name)
+{"aww" => 50, "corgi" => 80 }.each do |subreddit_name, limit|
+  subreddit = Reddit::Page.new(subreddit_name, limit)
   subreddit_images = subreddit.images
   subreddit_images.each do |image|
     image.save("/tmp/aww_picture/")
