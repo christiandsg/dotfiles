@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'trollop'
+
 module Reddit
 
   class Page
@@ -65,6 +67,7 @@ module Reddit
     def valid?
       !(@id.nil? || @url.nil?)
     end
+
     private
 
     def self.normalize_url(url)
@@ -82,10 +85,24 @@ module Reddit
   end
 end
 
-{"aww" => 50, "corgi" => 80 }.each do |subreddit_name, limit|
-  subreddit = Reddit::Page.new(subreddit_name, limit)
+NUM_PICTURES = 100
+
+# Input params
+opts = Trollop::options do
+  banner <<-EOS
+Script to download images from a list of subreddits. The number of images to download
+is fix to 100.
+Example: ./reddit_image_downloader.rb -s aww corgi -d /tmp/aww_pictures/
+  EOS
+
+  opt :subreddits, "Lists of subreddit names", :type => :strings
+  opt :destination_folder, "Image folder destination", :type => :string
+end
+
+opts[:subreddits].each do |subreddit_name|
+  subreddit = Reddit::Page.new(subreddit_name, NUM_PICTURES)
   subreddit_images = subreddit.images
   subreddit_images.each do |image|
-    image.save("/tmp/aww_picture/")
+    image.save(opts[:destination_folder])
   end
 end
