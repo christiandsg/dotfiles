@@ -6,7 +6,7 @@ set -e
 echo "#### Assorted dotfiles configs ####"
 
 # Files to symlink
-dotfiles='.gitconfig .global_gitignore'
+dotfiles='.gitconfig .global_gitignore .synergy.conf'
 
 recreate_symbolic_links(){
   echo "=======> Creating assorted dotfiles configs"

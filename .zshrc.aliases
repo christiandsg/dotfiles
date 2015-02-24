@@ -1,3 +1,5 @@
+# Synergy 
+alias synergy_server_start='/usr/bin/synergys -f --debug INFO --name budare -c ~/synergy.conf --address :24800'
 
 # MAC Specific aliases
 alias mac-disable-screen='sudo nvram boot-args="niog=1"'
