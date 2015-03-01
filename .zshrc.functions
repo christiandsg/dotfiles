@@ -1,3 +1,9 @@
+# Return current public IP address
+function public_ip(){
+  local ip=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//');
+  echo ${ip};
+}
+
 # Simple calculator
 function calc() {
   local result="";
