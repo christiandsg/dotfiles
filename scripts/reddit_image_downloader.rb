@@ -90,19 +90,23 @@ NUM_PICTURES = 100
 # Input params
 opts = Trollop::options do
   banner <<-EOS
-Script to download images from a list of subreddits. The number of images to download
-is fix to 100.
+This script downloads the top images of a set of subreddits.
+- The number of images to download is fix to 100.
 Example: ./reddit_image_downloader.rb -s aww corgi -d /tmp/aww_pictures/
   EOS
-
   opt :subreddits, "Lists of subreddit names", :type => :strings
   opt :destination_folder, "Image folder destination", :type => :string
 end
 
+puts "Starting reddit_image_downloader with params '#{opts.inspect}'"
+
 opts[:subreddits].each do |subreddit_name|
+  puts "Processing subreddit '#{subreddit_name}'"
   subreddit = Reddit::Page.new(subreddit_name, NUM_PICTURES)
   subreddit_images = subreddit.images
   subreddit_images.each do |image|
     image.save(opts[:destination_folder])
   end
 end
+
+puts "Finished reddit_image_downloader"
