@@ -61,6 +61,8 @@ module Reddit
       rescue OpenURI::HTTPError
         puts "Error while saving #{self.inspect}"
         false
+      rescue SocketError
+        false
       end
     end
 
@@ -94,18 +96,23 @@ This script downloads the top images of a set of subreddits.
 - The number of images to download is fix to 100.
 Example: ./reddit_image_downloader.rb -s aww corgi -d /tmp/aww_pictures/
   EOS
-  opt :subreddits, "Lists of subreddit names", :type => :strings
-  opt :destination_folder, "Image folder destination", :type => :string
+  opt :subreddits, "Lists of subreddit names", type: :strings
+  opt :destination_folder, "Image folder destination", type: :string
+  opt :delete_destination_folder, "Delete destination folder if it exists", short: "-D", type: :boolean, default: false
 end
 
 puts "Starting reddit_image_downloader with params '#{opts.inspect}'"
+
+destination_folder = opts[:destination_folder]
+FileUtils.rmdir(destination_folder) if opts[:delete_destination_folder]
+FileUtils.mkdir(destination_folder) unless Dir.exists?(destination_folder)
 
 opts[:subreddits].each do |subreddit_name|
   puts "Processing subreddit '#{subreddit_name}'"
   subreddit = Reddit::Page.new(subreddit_name, NUM_PICTURES)
   subreddit_images = subreddit.images
   subreddit_images.each do |image|
-    image.save(opts[:destination_folder])
+    image.save(destination_folder)
   end
 end
 
